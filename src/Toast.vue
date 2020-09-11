@@ -6,12 +6,14 @@
         :m="m"
         :html="html"
         :key="m.id"
+        :close="close"
       />
     </toast-transition>
   </div>
 </template>
 
 <script>
+import { REMOVE_TOAST_MESSAGE } from './module'
 import { DefaultTransition as ToastTransition } from './config'
 import ToastMessage from './components/ToastMessage'
 
@@ -52,6 +54,16 @@ export default {
 
       return this.namespace
     }
+  },
+
+  methods: {
+    close(id) {
+      this.$store.dispatch(
+        this.normalizedNamespace + REMOVE_TOAST_MESSAGE,
+        id
+      )
+    },
+
   },
 
   components: {

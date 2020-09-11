@@ -7,23 +7,15 @@
 </template>
 
 <script>
-import { REMOVE_TOAST_MESSAGE } from '../module'
-
 export default {
   name: 'ToastMessage',
   props: {
     m: Object,
-    html: Boolean
+    html: Boolean,
+    close: Function
   },
 
   methods: {
-    close(id) {
-      this.$store.dispatch(
-        this.normalizedNamespace + REMOVE_TOAST_MESSAGE,
-        id
-      )
-    },
-
     messageTypeClass(message) {
       return `toast-type-${message.type}`
     }
