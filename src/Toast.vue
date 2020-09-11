@@ -1,11 +1,13 @@
 <template>
   <div class="toast" :class="positionClass">
     <toast-transition>
-      <div class="toast-message" :class="messageTypeClass(m)" v-for="m in messages" :key="m.id" role="note">
-        <div class="toast-message-text" v-if="html" v-html="m.text"></div>
-        <div class="toast-message-text" v-else>{{ m.text }}</div>
-        <button class="toast-button" aria-label="Close" type="button" @click="close(m.id)"></button>
-      </div>
+      <ToastMessage
+        v-for="m in messages"
+        :m="m"
+        :html="html"
+        :key="m.id"
+        :close="close"
+      />
     </toast-transition>
   </div>
 </template>
@@ -13,6 +15,7 @@
 <script>
 import { REMOVE_TOAST_MESSAGE } from './module'
 import { DefaultTransition as ToastTransition } from './config'
+import ToastMessage from './components/ToastMessage'
 
 export default {
   props: {
@@ -61,13 +64,11 @@ export default {
       )
     },
 
-    messageTypeClass(message) {
-      return `toast-type-${message.type}`
-    }
   },
 
   components: {
-    ToastTransition
+    ToastTransition,
+    ToastMessage
   }
 }
 </script>
@@ -79,33 +80,6 @@ $width: 350px;
   position: fixed;
   width: $width;
   z-index: 10000;
-}
-
-.toast-message {
-  position: relative;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  padding: 15px;
-  width: 100%;
-  color: #fff;
-  transition: 400ms cubic-bezier(0.17, 0.67, 0.17, 0.98);
-  transition-property: opacity, transform;
-}
-
-.toast-button {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  padding: 2px;
-  background-color: transparent;
-  border-width: 0;
-  font-size: 1.5em;
-  color: inherit;
-  cursor: pointer;
-}
-
-.toast-button::before {
-  content: '\d7';
 }
 
 /**
